@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 
-const PRIV_KEY = fs.readFileSync(path.resolve(__dirname, '../keys/id_rsa_pub.pem'));
+const PRIV_KEY = fs.readFileSync(path.resolve(__dirname, '../keys/id_rsa_priv.pem'), 'utf8');
 
 function validPassword(password, hash, salt) {
     const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
@@ -21,12 +21,12 @@ function generatePassword(password) {
 }
 
 function issueJWT(user) {
-    const _id = user.id;
+    const id = user.id;
 
     const expiresIn = '1d';
 
     const payload = {
-        sub: _id,
+        sub: id,
         iat: Date.now()
     };
 
