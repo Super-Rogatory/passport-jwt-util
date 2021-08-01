@@ -2,13 +2,11 @@ const express = require("express");
 const router = express.Router();
 const utils = require("../../libs/utils");
 const User = require("../db/User");
-const passport = require("passport")
+// const passport = require("passport")
 // Mounted on '/api/users
-// router.get("/", (req, res, next) => {
-//   res.send({ msg: "hello world" });
-// });
 
-router.post("/protected", passport.authenticate('jwt', {session: false}), (req, res, next) => {
+router.post("/protected", utils.customAuthMiddleware, (req, res, next) => {
+    console.log(req.jwt);
     res.status(200).json({msg: "access granted"});
 });
 

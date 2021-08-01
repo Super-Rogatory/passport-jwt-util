@@ -1,7 +1,7 @@
 const express = require('express');
 // const cors = require('cors');
 const path = require('path');
-const passport = require('passport');
+// const passport = require('passport');
 
 require('dotenv').config({path: path.resolve(__dirname, '../.env')});
 
@@ -11,10 +11,10 @@ const app = express();
 require('./server/db/User');
 
 // Pass the global passport object into the config function
-require('./config/passport')(passport);
+// require('./config/passport')(passport);
 
 // Initialize the passport object on every request
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 // Parse req.body
 app.use(express.json());
