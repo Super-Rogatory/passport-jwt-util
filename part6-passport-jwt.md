@@ -52,7 +52,7 @@ function customAuthMiddleware(req, res, next) {
 }
 ```
 
-## If validation is successful we should get an object. If it is unsuccessful, we get an error.
+## If validation is successful we should get the payload object from jwt.sign(). If it is unsuccessful, we get an error.
 ```
 { sub: 1, iat: 1627782683336, exp: 1627782769736 }
 ```

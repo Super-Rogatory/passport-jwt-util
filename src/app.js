@@ -2,7 +2,7 @@ const express = require('express');
 // const cors = require('cors');
 const path = require('path');
 // const passport = require('passport');
-
+const cors = require('cors');
 require('dotenv').config({path: path.resolve(__dirname, '../.env')});
 
 const app = express();
@@ -10,11 +10,7 @@ const app = express();
 // Connect database, ensure table is created and connection is secured.
 require('./server/db/User');
 
-// Pass the global passport object into the config function
-// require('./config/passport')(passport);
-
-// Initialize the passport object on every request
-// app.use(passport.initialize());
+app.use(cors());
 
 // Parse req.body
 app.use(express.json());
