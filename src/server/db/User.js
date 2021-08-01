@@ -14,7 +14,7 @@ const User = db.define("user", {
   },
 });
 
-User.sync()
+User.sync({ force: true })
 .then(() => console.log('db: table has been created'))
 .catch((err) => console.log('error creating the table', err));
 
