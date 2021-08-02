@@ -5,7 +5,7 @@ const User = require("../db/User");
 // const passport = require("passport")
 // Mounted on '/api/users
 
-router.post("/protected", utils.customAuthMiddleware, (req, res, next) => {
+router.get("/protected", utils.customAuthMiddleware, (req, res, next) => {
     console.log(req.jwt);
     res.status(200).json({msg: "access granted"});
 });

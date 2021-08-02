@@ -54,7 +54,7 @@ function issueJWT(user) {
 
 function customAuthMiddleware(req, res, next) {
     // const tokenParts = req.headers.authorization.split(' ');
-    const [bearer, jsonToken] = req.headers.authorization.split(' ');
+    const [bearer, jsonToken] = req.headers.authorization ? req.headers.authorization.split(' ') : ['no bearer', 'no token'];
     if(bearer === 'Bearer' && jsonToken.match(/\S+\.\S+\.\S+/) !== null) {
         try {
             const verification = jwt.verify(jsonToken, PUB_KEY, { algorithms: ['RS256'] });

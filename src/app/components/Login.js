@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import moment from 'moment';
 export default class Login extends Component {
     constructor(){
         super();
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            redirectToApp: false,
+            logout: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,13 +22,24 @@ export default class Login extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        const reqObject = {...this.state};
+        const { username, password } = this.state; // want to get username and password properties out of this.state
+        const reqObject = { username, password }; // want to create an object literal with username and password properties using shorthand syntax
         axios.post('http://localhost:8080/api/users/login', reqObject, { headers: {'Content-type': 'application/json' }} )
-        .then((res) => console.log(res.data))
+        .then((res) => {
+            this.setLocalStorage(res.data);
+            this.setState({redirectToApp: true});
+        })
         .catch((err) => console.log(err));
+    }
+    setLocalStorage(responseObject){
+        const expires = moment().add(responseObject.expiresIn);
+        localStorage.setItem('token', responseObject.token);
+        localStorage.setItem('expires', JSON.stringify(expires.valueOf()));
     }
     render() {
         const { handleChange, handleSubmit } = this;
+        const { redirectToApp } = this.state;
+        if(redirectToApp) return <Redirect to='/protected' />
         return (
             <div>
                 <h1>Login</h1>
